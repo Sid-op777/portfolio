@@ -3,10 +3,10 @@ precision highp float;
 uniform vec2 iResolution;
 uniform float iTime;
 uniform float uBlobCount;
-uniform float uBlobs[20]; // max 10 blobs (10 * 2 floats)
+uniform float uBlobs[180]; // max 90 blobs (20 * 2 floats)
 
 float metaball(vec2 uv, vec2 center) {
-  float r = 0.15;
+  float r = 0.1; // blob radius
   float d = length(uv - center);
   return r * r / (d * d + 0.01);
 }
@@ -26,6 +26,6 @@ void main() {
   float edge = 0.05;
   float alpha = smoothstep(threshold - edge, threshold + edge, field);
 
-  vec3 color = mix(vec3(0.0), vec3(0.2, 0.8, 1.0), alpha);
+  vec3 color = mix(vec3(1.0), vec3(0.0), alpha); 
   gl_FragColor = vec4(color, alpha);
 }
