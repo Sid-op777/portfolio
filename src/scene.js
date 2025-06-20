@@ -5,6 +5,7 @@ import { generateAnchorPoints } from './scene3';
 
 export function initScene() {
   //generate anchor points and get their cordinates
+  //make this sampling uniform for each letter
   const targetPoints = generateAnchorPoints("Verdana", 600, 24, "Hello!");
   console.log(`[INFO] number of anchor points: ${targetPoints.length}`);
   console.log('[INFO] canvas points: ', targetPoints)
@@ -39,10 +40,10 @@ export function initScene() {
 
   const blobCount = targetPoints.length; // one blob for each anchor
   const blobPositions = new Float32Array(blobCount * 2);
-  //for now we random spawn the blobs on the canvas
+  //for now we randomly spawn the blobs on the canvas
   for (let i = 0; i < blobCount; i++) {
     blobPositions[i * 2] = Math.random() * 2 - 1;
-    blobPositions[i * 2 + 1] = Math.random() * 2 - 1;
+    blobPositions[i * 2 + 1] = -1;
   }
 
   const uniforms = {
@@ -61,7 +62,7 @@ export function initScene() {
   const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
   scene.add(quad);
 
-  // dev
+  //dev
   // for (const pt of normalisedTargetPoints) {
   //   const circle = new THREE.Mesh(
   //     new THREE.CircleGeometry(0.005, 16),

@@ -1,9 +1,10 @@
 #define MAX_BLOBS 500
 #define BLOB_RADIUS 0.1
-#define THRESHOLD 1.0
+#define THRESHOLD 6.5
 #define EDGE 0.01
 #define MERGE_FACTOR 10.0 //lower will have affinity to merge
 #define INFLUENCE 0.05
+#define DEM 0.0001
 
 precision highp float;
 
@@ -14,8 +15,8 @@ uniform float uBlobs[MAX_BLOBS*2];
 
 float metaball(vec2 uv, vec2 center) {
   float d = length(uv - center);
-  if(d>INFLUENCE) return 0.0;
-  return BLOB_RADIUS * BLOB_RADIUS / (MERGE_FACTOR * d * d + 0.01);
+  // if(d>INFLUENCE) return 0.0;
+  return BLOB_RADIUS * BLOB_RADIUS / (MERGE_FACTOR * d * d + DEM);
 }
 
 void main() {
