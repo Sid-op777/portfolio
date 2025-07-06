@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import { cn } from "@/lib/utils"
-import { Github, Linkedin, FileText} from "lucide-react"
+import { Github, Linkedin, FileText, Mail} from "lucide-react"
+import CardFlip from "./ui/card-flip"
+import TypewriterTitle from "./ui/type-writer"
+import { greetings } from "./constants/greetings"
 
 
 interface CyberBackgroundProps {
@@ -111,7 +114,7 @@ interface Particle {
 }
 
 export default function ParticlesBackground({
-  title = "Hi!\nI'm Siddhartha Bhol",
+  title = "I'm Siddhartha Bhol",
   particleCount = 1000,
   noiseIntensity = 0.003,
   particleSize = { min: 0.5, max: 2 },
@@ -119,7 +122,7 @@ export default function ParticlesBackground({
 }: CyberBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const noise = createNoise()
-  
+
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -149,8 +152,8 @@ export default function ParticlesBackground({
 
     const animate = () => {
       const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
-      const isDark = savedTheme==="dark"
-    //   const scheme = isDark ? COLOR_SCHEME.dark : COLOR_SCHEME.light
+      const isDark = savedTheme === "dark"
+      //   const scheme = isDark ? COLOR_SCHEME.dark : COLOR_SCHEME.light
 
       ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -199,31 +202,118 @@ export default function ParticlesBackground({
   }, [particleCount, noiseIntensity, particleSize, noise])
 
   return (
-    <div className={cn("relative w-full h-screen overflow-hidden", "bg-white dark:bg-black", className)}>
+    <div className={cn("relative w-full overflow-hidden", "bg-white dark:bg-black", className)}>
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center space-y-4"
-        >
-          <h1 className="text-6xl md:text-8xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 drop-shadow-sm">
-            {title}
-          </h1>
-          <div className="flex items-center justify-center gap-6 mt-4">
-            <a href="https://github.com/Sid-op777" target="_blank" rel="noopener noreferrer">
-              <Github className="w-6 h-6 text-black" />
-            </a>
-            <a href="https://www.linkedin.com/in/siddhartha-bhol/" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="w-6 h-6 text-black" />
-            </a>
-            <a href="https://drive.google.com/file/d/1tLv-RpsRBqXA6V8FehgG-mJHyQE1tHOI/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-              <FileText className="w-6 h-6 text-black" />
-            </a>
+
+      <section className="flex flex-col items-center justify-center w-full h-screen">
+        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+          {/* Typewriter Hello Section */}
+          <div className="text-center space-y-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}>
+              <TypewriterTitle
+                sequences={greetings}
+                typingSpeed={100}
+                startDelay={0}
+                autoLoop={true}
+                loopDelay={0}
+              />
+            </motion.div>
+
+            <motion.h1
+              className="text-6xl md:text-8xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20 drop-shadow-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 1 }}
+            >
+              {title}
+            </motion.h1>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2, duration: 0.6 }}
+              className="flex items-center justify-center gap-6 mt-6"
+            >
+              <a
+                href="https://github.com/Sid-op777"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20"
+              >
+                <Github className="w-6 h-6 text-white dark:text-black" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/siddhartha-bhol/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20"
+              >
+                <Linkedin className="w-6 h-6 text-white dark:text-black" />
+              </a>
+              <a
+                href="https://drive.google.com/file/d/1tLv-RpsRBqXA6V8FehgG-mJHyQE1tHOI/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20"
+              >
+                <FileText className="w-6 h-6 text-white dark:text-black" />
+              </a>
+              <a
+                href="mailto:siddharthabhol91@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20"
+              >
+                <Mail className="w-6 h-6 text-white dark:text-black" />
+              </a>
+            </motion.div>
           </div>
-        </motion.div>
-      </div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3, duration: 0.6 }}
+            className="flex items-center justify-center gap-6 mt-6"
+          ><div className="absolute bottom-6 z-10 animate-bounce">
+              <div className="w-6 h-10 rounded-full border-2 border-black dark:border-white flex items-start justify-center p-1 overflow-hidden">
+                <div className="w-1 h-1 bg-black dark:bg-white rounded-full animate-scroll" />
+              </div>
+            </div>
+
+          </motion.div>
+
+        </div>
+
+      </section>
+
+      <section className="justify-items-center mt-50">
+        <motion.h6
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="text-2xl md:text-4xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-black to-black/70 dark:from-white dark:to-white/20 drop-shadow-sm">
+          Projects
+        </motion.h6>
+      </section>
+
+      <section className="justify max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          <CardFlip title="Vault" subtitle="Secure snippet sharing" description="Securely Share Sensitive Snippets—Without the Risk"  features={["Client-side encryption", "Time/Access Expiry", "Password Protection", "Zero-knowledge architecture"]} action_text="Visit Site" link="https://vault.nx7.tech"/>
+          <CardFlip title="LinkToolkit" subtitle="Link Shotening service" description="All-in-one solution for managing, tracking, and optimizing your links." features={["URL Shortene", "QR Code Generator", "Analytics Dashboard", "Right-Click Shorten"]} action_text="Visit Site" link="https://linktoolkit.nx7.tech"/>
+          <CardFlip title="EduScript" subtitle="Code-to-Video System" description="A declarative scripting language integrated with a robust rendering pipeline" features={["Create structured video content", "LLM friendly","Text-to-Speech synthesis",]} action_text="Code" link="https://github.com/Sid-op777/EduScript"/>
+          <CardFlip title="Distributed Rate Limiter" subtitle="A simple distributed rate limiter" description="Designed and implemented a distributed scalable rate-limiting service" features={["Redis for centralized state management","RabbitMQ for asynchronous task processing"]} action_text="Code" link="https://github.com/Sid-op777/Distributed-Rate-Limiter"/>
+          <CardFlip title="Caching Proxy" subtitle="A simple caching proxy" description="acts as an intermediary between a client and an origin server, caching responses to improve performance and reduce latency." features={["Handles multiple client requests concurrently", "Configurable via command-line arguments for port and origin server URL"]} action_text="Code" link="https://github.com/Sid-op777/Caching-Proxy"/>
+          <CardFlip title="Task Tracker CLI" subtitle="Task Tracker is a command-line tool for managing tasks efficiently" description="No need for fancy task tracking when you only need a simple CLI" features={["Add, update, delete tasks","Display all tasks or filter by status", "Search tasks", "Persistant"]} action_text="Code" link="https://github.com/Sid-op777/Task-Tracker-CLI"/>
+        </div>
+
+      </section>
+
     </div>
   )
 }
