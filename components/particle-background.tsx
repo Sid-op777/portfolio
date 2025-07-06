@@ -141,6 +141,9 @@ export default function ParticlesBackground({
 
     resizeCanvas()
 
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
+    const isDark = savedTheme === "dark" || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+
     const particles: Particle[] = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -151,10 +154,6 @@ export default function ParticlesBackground({
     }))
 
     const animate = () => {
-      const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null
-      const isDark = savedTheme === "dark"
-      //   const scheme = isDark ? COLOR_SCHEME.dark : COLOR_SCHEME.light
-
       ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -308,7 +307,7 @@ export default function ParticlesBackground({
           <CardFlip title="LinkToolkit" subtitle="Link Shotening service" description="All-in-one solution for managing, tracking, and optimizing your links." features={["URL Shortene", "QR Code Generator", "Analytics Dashboard", "Right-Click Shorten"]} action_text="Visit Site" link="https://linktoolkit.nx7.tech"/>
           <CardFlip title="EduScript" subtitle="Code-to-Video System" description="A declarative scripting language integrated with a robust rendering pipeline" features={["Create structured video content", "LLM friendly","Text-to-Speech synthesis",]} action_text="Code" link="https://github.com/Sid-op777/EduScript"/>
           <CardFlip title="Distributed Rate Limiter" subtitle="A simple distributed rate limiter" description="Designed and implemented a distributed scalable rate-limiting service" features={["Redis for centralized state management","RabbitMQ for asynchronous task processing"]} action_text="Code" link="https://github.com/Sid-op777/Distributed-Rate-Limiter"/>
-          <CardFlip title="Caching Proxy" subtitle="A simple caching proxy" description="acts as an intermediary between a client and an origin server, caching responses to improve performance and reduce latency." features={["Handles multiple client requests concurrently", "Configurable via command-line arguments for port and origin server URL"]} action_text="Code" link="https://github.com/Sid-op777/Caching-Proxy"/>
+          <CardFlip title="Caching Proxy" subtitle="A simple caching proxy" description="Intermediary between a client and an origin server, caching responses to improve performance and reduce latency." features={["Handles multiple client requests concurrently", "Configurable via command-line arguments for port and origin server URL"]} action_text="Code" link="https://github.com/Sid-op777/Caching-Proxy"/>
           <CardFlip title="Task Tracker CLI" subtitle="Task Tracker is a command-line tool for managing tasks efficiently" description="No need for fancy task tracking when you only need a simple CLI" features={["Add, update, delete tasks","Display all tasks or filter by status", "Search tasks", "Persistant"]} action_text="Code" link="https://github.com/Sid-op777/Task-Tracker-CLI"/>
         </div>
 
